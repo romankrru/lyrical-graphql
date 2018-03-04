@@ -26,8 +26,7 @@ class SongList extends Component {
   onSongDelete(id) {
     this.props.mutate({
       variables: {id: id},
-      refetchQueries: [{query: fetchSongs}],
-    });
+    }).then(() => this.props.data.refetch());
   }
 
   render() {
