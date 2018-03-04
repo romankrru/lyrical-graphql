@@ -16,7 +16,7 @@ class SongList extends Component {
             onClick={() => this.onSongDelete(id)}
             className="secondary-content"
           >
-            <i className="material-icons red-text">delete</i>
+            <i className="material-icons red-text SongList-delete-icon">delete</i>
           </span>
         </li>
       );
