@@ -4,6 +4,7 @@ import fetchSong from '../queries/fetchSong';
 import { Link } from 'react-router';
 
 import CreateLyric from './CreateLyric';
+import LyricList from './LyricList';
 
 class SongDetail extends Component {
   render() {
@@ -17,6 +18,7 @@ class SongDetail extends Component {
       <div>
         <Link to="/">Back</Link>
         <h3>{song.title}</h3>
+        <LyricList lyrics={song.lyrics} />
         <CreateLyric songId={this.props.params.id} />
       </div>
     );
