@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { Link } from 'react-router';
+import gql from 'graphql-tag';
+import flowRight from 'lodash.flowright';
 
 import fetchSongs from '../queries/fetchSongs';
 
 class SongList extends Component {
   renderSongs() {
-    return this.props.data.songs.map(song => {
+    return this.props.data.songs.map(({id, title}) => {
       return (
-        <li key={song.id} className="collection-item">
-          {song.title}
+        <li key={id} className="collection-item">
+          {title}
+          <span
+            onClick={() => this.onSongDelete(id)}
+            className="secondary-content"
+          >
+            <i className="material-icons red-text">delete</i>
+          </span>
         </li>
       );
+    });
+  }
+
+  onSongDelete(id) {
+    this.props.mutate({
+      variables: {id: id},
+      refetchQueries: [{query: fetchSongs}],
     });
   }
 
@@ -36,4 +51,15 @@ class SongList extends Component {
   }
 }
 
-export default graphql(fetchSongs)(SongList);
+const mutation = gql`
+  mutation DeleteSong($id: ID) {
+    deleteSong(id: $id) {
+      id
+    }
+  }
+`;
+
+export default flowRight([
+  graphql(mutation),
+  graphql(fetchSongs),
+])(SongList);
