@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class LyricList extends Component {
   render() {
-    console.log(this.props)
     return (
       <ul className="collection">
         {
